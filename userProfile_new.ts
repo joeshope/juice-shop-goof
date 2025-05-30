@@ -24,6 +24,7 @@ module.exports = function getUserProfile () {
       const loggedInUser = security.authenticatedUsers.get(req.cookies.token)
       if (loggedInUser) {
         UserModel.findByPk(loggedInUser.data.id).then((user: UserModel | null) => {
+          res.headers['content-type'] = 'application/json; charset=utf-8';
           let template = buf.toString()
           let username = user?.username
           if (username?.match(/#{(.*)}/) !== null && !utils.disableOnContainerEnv()) {
